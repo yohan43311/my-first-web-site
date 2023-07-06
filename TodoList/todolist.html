@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="daynight.js"></script>
+    <title>ToDoList</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Bacasime Antique', serif;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            margin-top: 150px;
+
+
+            background-color: rgba(0, 0, 128, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 2px 7px 15px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            width: 300px;
+            height: 300px;
+            font-family: 'Bacasime Antique', serif;
+
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Bacasime Antique', serif;
+        }
+
+        #todo-input {
+            width: 95.2%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            font-family: 'Bacasime Antique', serif;
+
+        }
+
+        #add-btn {
+            width: 100%;
+            padding: 10px;
+
+            color: black;
+            border: none;
+            cursor: pointer;
+
+            border-radius: 10px;
+            margin-left: 88%;
+            width: 45px;
+
+        }
+
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+            font-family: 'Agdasima', sans-serif;
+        }
+
+        .todo-item .delete-btn {
+            margin-left: 60%;
+            background-color: #cc0000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-family: 'Agdasima', sans-serif;
+
+        }
+
+        #day-night {
+
+            margin-bottom: 10px;
+            margin-left: 93%;
+            border-radius: 10px;
+            border: none;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>ToDoList</h1>
+        <input type="button" id="day-night" value="🌙" onclick="nightDayHandler(this);">
+        <input type="text" id="todo-input" placeholder="write down to do">
+        <button id="add-btn">+</button>
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todo-input');
+        const addBtn = document.getElementById('add-btn');
+        const todoList = document.getElementById('todo-list');
+
+        addBtn.addEventListener('click', function () {
+            addTodo();
+        });
+
+        todoInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // 기본 동작(새 줄 추가) 방지
+                addTodo();
+            }
+        });
+
+        function addTodo() {
+            const todoText = todoInput.value;
+
+            if (todoText.trim() === '') {
+                alert('일 안해? 이걸 안해?');
+                return;
+            }
+
+            const todoItem = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            const todoTextSpan = document.createElement('span');
+            todoTextSpan.textContent = todoText;
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'DEL';
+            deleteBtn.classList.add('delete-btn');
+
+            todoItem.classList.add('todo-item');
+            todoItem.appendChild(checkbox);
+            todoItem.appendChild(todoTextSpan);
+            todoItem.appendChild(deleteBtn);
+            todoList.appendChild(todoItem);
+
+            todoInput.value = '';
+        }
+
+        todoList.addEventListener('click', function (event) {
+            if (event.target.classList.contains('delete-btn')) {
+                const todoItem = event.target.parentNode;
+                todoList.removeChild(todoItem);
+            }
+        });
+    </script>
+</body>
+
+</html>

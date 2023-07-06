@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Scroll</title>
+    <style>
+        body {
+            padding-top: 154px;
+            /* 네비게이션 바의 높이만큼 바디 위쪽에 여백 추가 */
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            height: 40px;
+            background-color: lightgray;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: black;
+
+
+        }
+
+        .page {
+            margin-top: 1000px;
+            /* 네비게이션 바의 높이만큼 페이지 위쪽에 여백 추가 */
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="#page1">Page 1</a>
+        <a href="#page2">Page 2</a>
+        <a href="#page3">Page 3</a>
+        <a href="#page4">Page 4</a>
+    </nav>
+
+    <div id="page1" class="page">
+        Page 1 Content
+    </div>
+
+    <div id="page2" class="page">
+        Page 2 Content
+    </div>
+
+    <div id="page3" class="page">
+        Page 3 Content
+    </div>
+
+    <div id="page4" class="page">
+        Page 4 Content
+    </div>
+
+    <script>
+        function scrollToTarget(event) {
+            event.preventDefault();
+            const targetId = event.target.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const targetOffset = targetElement.offsetTop - 154; // 네비게이션 바의 높이만큼 오프셋 조정
+            window.scrollTo({
+                top: targetOffset,
+                behavior: 'smooth'
+            });
+        }
+
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(function (link) {
+            link.addEventListener('click', scrollToTarget);
+        });
+    </script>
+</body>
+
+</html>
